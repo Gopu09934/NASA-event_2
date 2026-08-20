@@ -62,16 +62,26 @@ SUB_ICON_R=20
 ENABLE_BUMPER=true
 BUMPER_DURATION=5   # seconds
 BUMPER_MESSAGES=(
-    "Stay tuned as more meteors streak across tonight's Perseid shower."
-    "The night sky keeps delivering — more shooting stars coming up next."
-    "Keep watching as Earth passes deeper into the Perseid debris stream."
-    "From faint streaks to bright fireballs, more meteors await."
-    "The shower is still active. Stay with us for the next view."
-    "See the Perseids light up the sky in stunning detail."
-    "Every passing meteor adds another moment to tonight's show."
-    "Look up — more shooting stars are on the way."
-    "More fireballs, more trails, more cosmic debris burning bright ahead."
-    "The next chapter of tonight's meteor shower begins shortly."
+    "Explore breathtaking nebulae where new stars are born.",
+    "Discover distant galaxies across the depths of deep space.",
+    "Journey through the universe with stunning JWST imagery.",
+    "Witness ancient galaxies shining across billions of years.",
+    "Explore mysterious black holes hidden across deep space.",
+    "Discover brilliant stars forming inside distant nebulae.",
+    "Journey beyond our galaxy into the vast universe.",
+    "Explore cosmic wonders captured across the distant universe.",
+    "Discover distant stars hidden within beautiful nebulae.",
+    "Witness the incredible beauty of deep space in 4K.",
+    "Explore galaxies billions of light-years away from Earth.",
+    "Discover the mysteries hidden within the distant cosmos.",
+    "Journey through deep space and explore distant galaxies.",
+    "Witness stars being born inside massive cosmic clouds.",
+    "Explore the universe through powerful JWST observations.",
+    "Discover ancient light traveling across the cosmos.",
+    "Explore distant worlds hidden beyond our solar system.",
+    "Witness spectacular galaxies scattered across deep space.",
+    "Discover the incredible scale and beauty of our universe.",
+    "Continue exploring the universe with JWST deep-space views."
 )
 
 #############################################
@@ -205,12 +215,12 @@ trap 'kill "$CLOCK_PID" 2>/dev/null || true; [ -n "$SUBS_PID" ] && kill "$SUBS_P
 #############################################
 # Static panel text (unchanged across videos)
 #############################################
-printf 'PERSEID  METEOR  SHOWER'          > "$ASSET_DIR/title1.txt"
-printf 'L I V E   N I G H T   S K Y'      > "$ASSET_DIR/title2.txt"
-printf "T O N I G H T ' S   S K Y   E V E N T" > "$ASSET_DIR/header.txt"
-printf 'NASA METEOR WATCH'                > "$ASSET_DIR/eyebrow.txt"
-printf 'SUBSCRIBE for live meteor shower updates' > "$ASSET_DIR/cta.txt"
-printf 'DID YOU KNOW' > "$ASSET_DIR/fact_label.txt"
+printf 'DEEP  SPACE'                              > "$ASSET_DIR/title1.txt"
+printf 'E X P L O R E   T H E   U N I V E R S E' > "$ASSET_DIR/title2.txt"
+printf 'T O N I G H T S   U N I V E R S E'       > "$ASSET_DIR/header.txt"
+printf 'DEEP SPACE OBSERVATORY'                   > "$ASSET_DIR/eyebrow.txt"
+printf 'SUBSCRIBE for more space discoveries'    > "$ASSET_DIR/cta.txt"
+printf 'DID YOU KNOW'                            > "$ASSET_DIR/fact_label.txt"
 
 #############################################
 # Default headline / fact pools (used as a
@@ -218,54 +228,54 @@ printf 'DID YOU KNOW' > "$ASSET_DIR/fact_label.txt"
 # are missing or empty)
 #############################################
 DEFAULT_HEADLINES=(
-    "The Perseid meteor shower is peaking tonight, lighting up skies around the world."
-    "Earth is passing through debris left behind by comet Swift-Tuttle, sparking tonight's shower."
-    "Under dark skies, viewers may spot 50 to 75 meteors per hour during tonight's peak."
-    "A new moon tonight means darker skies and better conditions for spotting meteors."
-    "Perseid meteors streak into the atmosphere at roughly 58 kilometers per second."
-    "NASA is hosting a live Perseid watch party alongside stargazers around the world."
-    "The Perseids are active from mid-July through late August, with tonight marking their peak."
-    "This year's peak coincides with a total solar eclipse crossing the Northern Hemisphere."
-    "Meteor trails form as tiny comet fragments burn up roughly 100 kilometers overhead."
-    "If you trace the meteors backward, they appear to radiate from the constellation Perseus."
-    "The Perseids are considered one of the most reliable and prolific showers of the year."
-    "Best viewing tonight is after midnight through dawn, away from city lights.",
-    "Some Perseid fireballs can outshine every star in the night sky for a brief moment."
-    "Skywatchers have tracked the Perseids since antiquity, with records dating back centuries."
-    "Every streak of light tonight is a tiny piece of a comet meeting Earth's atmosphere."
+    "James Webb continues revealing breathtaking galaxies across the distant universe.",
+    "JWST observations are helping scientists explore some of the universe's earliest galaxies.",
+    "Distant galaxies reveal light that has traveled billions of years across space.",
+    "Massive nebulae provide the raw material needed to form new generations of stars.",
+    "James Webb can observe cosmic objects hidden behind clouds of dust and gas.",
+    "Some galaxies captured by JWST existed when the universe was still very young.",
+    "Powerful infrared observations are revealing previously hidden structures across deep space.",
+    "Stars are born inside enormous clouds of gas and dust scattered across the cosmos.",
+    "Black holes remain among the most mysterious and powerful objects in the universe.",
+    "Ancient starlight allows astronomers to study the history and evolution of galaxies.",
+    "JWST is giving scientists an unprecedented view of distant cosmic environments.",
+    "Nebulae glow across space as radiation from nearby stars illuminates surrounding gas.",
+    "Some of the faintest galaxies reveal important clues about the early universe.",
+    "Every distant galaxy contains billions of stars and a remarkable cosmic history.",
+    "The universe continues expanding while galaxies evolve across billions of years."
 )
 
 DEFAULT_FACTS=(
-    "The Perseid meteor shower is caused by debris from comet Swift-Tuttle."
-    "Comet Swift-Tuttle takes about 133 years to orbit the Sun."
-    "Perseid meteors enter Earth's atmosphere at around 58.8 kilometers per second."
-    "The Perseids are named after the constellation Perseus, where they appear to originate."
-    "Most Perseid meteors burn up about 100 kilometers above Earth's surface."
-    "The shower is active from mid-July to late August, peaking around August 12 to 13."
-    "Under ideal dark-sky conditions, observers can see up to 100 meteors per hour at peak."
-    "A 2026 new moon during the peak means little moonlight interference for viewers."
-    "Perseid meteors are best viewed with the naked eye — no telescope required."
-    "The radiant of a meteor shower is the point in the sky the meteors appear to come from."
-    "Meteor showers occur every year as Earth crosses the same orbital debris trail."
-    "Comet Swift-Tuttle was independently discovered by Lewis Swift and Horace Tuttle in 1862."
-    "A meteor that survives its fall to the ground is called a meteorite."
-    "The Perseids have been observed and recorded for close to two thousand years."
-    "Meteor rates are usually highest in the hours before dawn, when Earth faces into the debris stream."
-    "The Geminids, peaking in December, are the only other shower to rival the Perseids in strength."
-    "Bright Perseid fireballs can sometimes leave a glowing trail that lingers for a few seconds."
-    "Meteor showers are best enjoyed away from city lights, letting eyes adjust for 20-30 minutes."
-    "The Milky Way contains hundreds of billions of stars."
-    "A light-year is the distance light travels in one year, about 9.46 trillion kilometers."
-    "The James Webb Space Telescope observes the Universe primarily in infrared wavelengths."
-    "The Sun contains about 99.8 percent of the mass of the Solar System."
-    "Jupiter's gravity can bend the orbits of comets, sometimes strengthening a meteor shower."
-    "Earth's atmosphere protects the surface from the vast majority of incoming meteoroids."
-    "Dark matter does not emit or reflect light in a way we can directly detect, but its gravitational effects reveal its presence."
-    "The International Space Station orbits Earth at roughly 28,000 kilometers per hour."
-    "Auroras occur when energetic charged particles interact with gases in Earth's upper atmosphere."
-    "Thousands of exoplanets have been confirmed beyond our Solar System."
-    "The search for potentially habitable exoplanets is one of the major goals of modern astronomy."
-    "Meteor showers occur when the Earth passes through debris shed by a comet or asteroid."
+    "The James Webb Space Telescope observes the Universe primarily in infrared wavelengths.",
+    "JWST uses a large segmented mirror measuring about 6.5 meters across.",
+    "James Webb launched into space on December 25, 2021, aboard an Ariane 5 rocket.",
+    "JWST operates near the Sun-Earth Lagrange Point 2, about 1.5 million kilometers away.",
+    "Infrared vision allows JWST to observe distant objects hidden behind cosmic dust.",
+    "Light from distant galaxies can travel for billions of years before reaching Earth.",
+    "Some galaxies observed by JWST existed when the Universe was less than a billion years old.",
+    "Nebulae are enormous clouds of gas and dust where stars can form.",
+    "New stars are born when dense regions of molecular clouds collapse under gravity.",
+    "The Milky Way contains hundreds of billions of stars across its vast spiral structure.",
+    "A light-year measures the distance light travels in one year, about 9.46 trillion kilometers.",
+    "Black holes have gravity so powerful that even light cannot escape from inside their event horizons.",
+    "Supermassive black holes can contain millions or billions of times the mass of our Sun.",
+    "Many large galaxies are believed to contain supermassive black holes at their centers.",
+    "Galaxies can collide and merge over millions or billions of years due to gravitational interactions.",
+    "JWST can analyze the chemical composition of distant planets by studying their atmospheres.",
+    "Exoplanets are worlds orbiting stars beyond our Solar System.",
+    "Thousands of exoplanets have been confirmed beyond our Solar System.",
+    "Some nebulae appear colorful because different gases emit specific wavelengths of light.",
+    "The Orion Nebula is one of the closest major stellar nurseries to Earth.",
+    "Stars spend most of their lives producing energy through nuclear fusion in their cores.",
+    "Massive stars can end their lives in spectacular supernova explosions.",
+    "Supernova explosions can create and distribute many of the heavy elements found in space.",
+    "Neutron stars are incredibly dense remnants left behind after certain massive stars explode.",
+    "The Universe has been expanding for approximately 13.8 billion years.",
+    "The cosmic microwave background provides evidence about the early history of the Universe.",
+    "Dark matter does not emit or reflect detectable light, but its gravity affects visible matter.",
+    "Dark energy is associated with the accelerating expansion of the Universe.",
+    "JWST's infrared instruments help astronomers study some of the earliest structures in the Universe.",
+    "Every deep-space image reveals objects existing at different distances and moments in cosmic history."
 )
 
 #############################################

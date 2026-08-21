@@ -62,26 +62,26 @@ SUB_ICON_R=20
 ENABLE_BUMPER=true
 BUMPER_DURATION=5   # seconds
 BUMPER_MESSAGES=(
-    "Explore breathtaking nebulae where new stars are born.",
-    "Discover distant galaxies across the depths of deep space.",
-    "Journey through the universe with stunning JWST imagery.",
-    "Witness ancient galaxies shining across billions of years.",
-    "Explore mysterious black holes hidden across deep space.",
-    "Discover brilliant stars forming inside distant nebulae.",
-    "Journey beyond our galaxy into the vast universe.",
-    "Explore cosmic wonders captured across the distant universe.",
-    "Discover distant stars hidden within beautiful nebulae.",
-    "Witness the incredible beauty of deep space in 4K.",
-    "Explore galaxies billions of light-years away from Earth.",
-    "Discover the mysteries hidden within the distant cosmos.",
-    "Journey through deep space and explore distant galaxies.",
-    "Witness stars being born inside massive cosmic clouds.",
-    "Explore the universe through powerful JWST observations.",
-    "Discover ancient light traveling across the cosmos.",
-    "Explore distant worlds hidden beyond our solar system.",
-    "Witness spectacular galaxies scattered across deep space.",
-    "Discover the incredible scale and beauty of our universe.",
-    "Continue exploring the universe with JWST deep-space views."
+    "Watch the Perseid Meteor Shower and search the night sky for shooting stars.",
+    "Look toward the night sky and discover bright Perseid meteors streaking across the darkness.",
+    "The Perseids are one of the most spectacular meteor showers of the year.",
+    "Keep watching the sky for fast-moving Perseid meteors and brilliant shooting stars.",
+    "Journey beneath the stars and experience the beauty of the Perseid Meteor Shower.",
+    "Perseid meteors are created as Earth passes through debris left by Comet Swift-Tuttle.",
+    "Watch for bright flashes as tiny particles enter Earth's atmosphere at incredible speeds.",
+    "The Perseid Meteor Shower brings shooting stars to skies around the world.",
+    "Stay with us and keep watching for the next bright Perseid meteor.",
+    "Turn your eyes toward the darkest part of the sky for the best meteor-watching experience.",
+    "The Perseids are famous for producing fast and bright meteors across the summer sky.",
+    "Every meteor is a tiny piece of cosmic debris meeting Earth's atmosphere.",
+    "Look up and explore one of nature's most beautiful nighttime spectacles.",
+    "The night sky is constantly changing. Stay tuned for the next Perseid shooting star.",
+    "Watch the Perseids live and discover the wonders hidden in Earth's night sky.",
+    "Bright meteors can appear suddenly, so keep watching and enjoy the entire sky.",
+    "The Perseid Meteor Shower connects Earth with debris traveling through our solar system.",
+    "Experience the night sky, shooting stars, and the spectacular Perseid meteor stream.",
+    "Keep watching the stars. The next Perseid meteor could appear at any moment.",
+    "Enjoy the Perseid Meteor Shower LIVE and explore the wonders of our night sky."
 )
 
 #############################################
@@ -215,12 +215,12 @@ trap 'kill "$CLOCK_PID" 2>/dev/null || true; [ -n "$SUBS_PID" ] && kill "$SUBS_P
 #############################################
 # Static panel text (unchanged across videos)
 #############################################
-printf 'DEEP  SPACE'                              > "$ASSET_DIR/title1.txt"
-printf 'E X P L O R E   T H E   U N I V E R S E' > "$ASSET_DIR/title2.txt"
-printf 'T O N I G H T S   U N I V E R S E'       > "$ASSET_DIR/header.txt"
-printf 'DEEP SPACE OBSERVATORY'                   > "$ASSET_DIR/eyebrow.txt"
-printf 'SUBSCRIBE for more space discoveries'    > "$ASSET_DIR/cta.txt"
-printf 'DID YOU KNOW'                            > "$ASSET_DIR/fact_label.txt"
+printf 'PERSEID METEORS'                         > "$ASSET_DIR/title1.txt"
+printf 'S H O O T I N G   S T A R S   T O N I G H T' > "$ASSET_DIR/title2.txt"
+printf 'L I V E   M E T E O R   W A T C H'       > "$ASSET_DIR/header.txt"
+printf 'NIGHT SKY OBSERVATORY'                   > "$ASSET_DIR/eyebrow.txt"
+printf 'SUBSCRIBE FOR MORE SPACE & SCIENCE'      > "$ASSET_DIR/cta.txt"
+printf 'METEOR FACT'                             > "$ASSET_DIR/fact_label.txt"
 
 #############################################
 # Default headline / fact pools (used as a
@@ -228,54 +228,54 @@ printf 'DID YOU KNOW'                            > "$ASSET_DIR/fact_label.txt"
 # are missing or empty)
 #############################################
 DEFAULT_HEADLINES=(
-    "James Webb continues revealing breathtaking galaxies across the distant universe.",
-    "JWST observations are helping scientists explore some of the universe's earliest galaxies.",
-    "Distant galaxies reveal light that has traveled billions of years across space.",
-    "Massive nebulae provide the raw material needed to form new generations of stars.",
-    "James Webb can observe cosmic objects hidden behind clouds of dust and gas.",
-    "Some galaxies captured by JWST existed when the universe was still very young.",
-    "Powerful infrared observations are revealing previously hidden structures across deep space.",
-    "Stars are born inside enormous clouds of gas and dust scattered across the cosmos.",
-    "Black holes remain among the most mysterious and powerful objects in the universe.",
-    "Ancient starlight allows astronomers to study the history and evolution of galaxies.",
-    "JWST is giving scientists an unprecedented view of distant cosmic environments.",
-    "Nebulae glow across space as radiation from nearby stars illuminates surrounding gas.",
-    "Some of the faintest galaxies reveal important clues about the early universe.",
-    "Every distant galaxy contains billions of stars and a remarkable cosmic history.",
-    "The universe continues expanding while galaxies evolve across billions of years."
+    "The Perseid Meteor Shower is one of the most spectacular annual meteor showers.",
+    "Perseid meteors are created when Earth passes through debris left behind by Comet Swift-Tuttle.",
+    "Tiny particles from Comet Swift-Tuttle create brilliant streaks of light as they enter Earth's atmosphere.",
+    "Perseid meteors can travel through Earth's atmosphere at incredible speeds.",
+    "The Perseids are known for producing bright and fast-moving shooting stars.",
+    "Meteor showers occur when Earth travels through streams of dust and debris in space.",
+    "Every shooting star is a small piece of cosmic material burning high in Earth's atmosphere.",
+    "The Perseid Meteor Shower appears to radiate from the constellation Perseus.",
+    "Dark skies provide the best conditions for spotting faint Perseid meteors.",
+    "Bright Perseid fireballs can sometimes outshine many of the stars in the night sky.",
+    "The Perseid meteor stream is associated with Comet 109P/Swift-Tuttle.",
+    "Earth encounters the Perseid debris stream every year as it travels around the Sun.",
+    "A meteor becomes visible when a small piece of space debris interacts with Earth's atmosphere.",
+    "The Perseids can produce numerous meteors during periods of favorable viewing conditions.",
+    "Look toward the darkest part of the sky and allow your eyes time to adjust to the darkness."
 )
 
 DEFAULT_FACTS=(
-    "The James Webb Space Telescope observes the Universe primarily in infrared wavelengths.",
-    "JWST uses a large segmented mirror measuring about 6.5 meters across.",
-    "James Webb launched into space on December 25, 2021, aboard an Ariane 5 rocket.",
-    "JWST operates near the Sun-Earth Lagrange Point 2, about 1.5 million kilometers away.",
-    "Infrared vision allows JWST to observe distant objects hidden behind cosmic dust.",
-    "Light from distant galaxies can travel for billions of years before reaching Earth.",
-    "Some galaxies observed by JWST existed when the Universe was less than a billion years old.",
-    "Nebulae are enormous clouds of gas and dust where stars can form.",
-    "New stars are born when dense regions of molecular clouds collapse under gravity.",
-    "The Milky Way contains hundreds of billions of stars across its vast spiral structure.",
-    "A light-year measures the distance light travels in one year, about 9.46 trillion kilometers.",
-    "Black holes have gravity so powerful that even light cannot escape from inside their event horizons.",
-    "Supermassive black holes can contain millions or billions of times the mass of our Sun.",
-    "Many large galaxies are believed to contain supermassive black holes at their centers.",
-    "Galaxies can collide and merge over millions or billions of years due to gravitational interactions.",
-    "JWST can analyze the chemical composition of distant planets by studying their atmospheres.",
-    "Exoplanets are worlds orbiting stars beyond our Solar System.",
-    "Thousands of exoplanets have been confirmed beyond our Solar System.",
-    "Some nebulae appear colorful because different gases emit specific wavelengths of light.",
-    "The Orion Nebula is one of the closest major stellar nurseries to Earth.",
-    "Stars spend most of their lives producing energy through nuclear fusion in their cores.",
-    "Massive stars can end their lives in spectacular supernova explosions.",
-    "Supernova explosions can create and distribute many of the heavy elements found in space.",
-    "Neutron stars are incredibly dense remnants left behind after certain massive stars explode.",
-    "The Universe has been expanding for approximately 13.8 billion years.",
-    "The cosmic microwave background provides evidence about the early history of the Universe.",
-    "Dark matter does not emit or reflect detectable light, but its gravity affects visible matter.",
-    "Dark energy is associated with the accelerating expansion of the Universe.",
-    "JWST's infrared instruments help astronomers study some of the earliest structures in the Universe.",
-    "Every deep-space image reveals objects existing at different distances and moments in cosmic history."
+    "The Perseid Meteor Shower is associated with Comet 109P/Swift-Tuttle.",
+    "Earth passes through the debris stream left behind by Comet Swift-Tuttle every year.",
+    "Perseid meteors are tiny pieces of cometary debris that enter Earth's atmosphere.",
+    "A meteor becomes visible when a space particle heats and excites gases in Earth's atmosphere.",
+    "The Perseids appear to radiate from a point in the constellation Perseus called the radiant.",
+    "The Perseid radiant rises higher in the sky during the night, improving viewing conditions.",
+    "Perseid meteors can enter Earth's atmosphere at speeds of roughly 59 kilometers per second.",
+    "Some Perseid meteors are bright enough to be seen even when they are not directly overhead.",
+    "Very bright meteors are sometimes called fireballs.",
+    "Meteor showers occur when Earth crosses a stream of dust and debris left along a comet's orbit.",
+    "Most meteoroids that create visible shooting stars are relatively small particles.",
+    "The bright streak of a meteor is produced high in Earth's atmosphere, not in outer space.",
+    "The Perseids are known for producing many fast and bright meteors.",
+    "Dark locations away from city lights provide much better conditions for meteor watching.",
+    "Your eyes may need around 20 to 30 minutes to become fully adapted to dark conditions.",
+    "A bright Moon can make faint meteors harder to see by increasing the brightness of the night sky.",
+    "You do not need a telescope to watch a meteor shower.",
+    "Meteor showers are best viewed with a wide, unobstructed view of the sky.",
+    "The Perseids are active for several weeks, although activity varies from night to night.",
+    "The Perseid meteor stream follows the long orbital path of Comet Swift-Tuttle.",
+    "Comet Swift-Tuttle takes about 133 years to orbit the Sun.",
+    "The last perihelion passage of Comet Swift-Tuttle occurred in 1992.",
+    "Meteoroids are pieces of rock or metal traveling through space before entering an atmosphere.",
+    "Once a meteoroid enters Earth's atmosphere and produces a visible streak, it is called a meteor.",
+    "If part of a space rock survives the journey through the atmosphere and reaches the ground, it is called a meteorite.",
+    "Earth's atmosphere protects the surface from most small meteoroids by causing them to burn or break apart.",
+    "The Perseid radiant is located near the constellation Perseus, but meteors can appear anywhere across the sky.",
+    "Meteor trails can last only a fraction of a second, while some persistent trails can remain visible longer.",
+    "The number of meteors you actually see depends on sky darkness, weather, Moon brightness, and your viewing location.",
+    "Every shooting star is a brief visible reminder that Earth is traveling through the debris of our Solar System."
 )
 
 #############################################

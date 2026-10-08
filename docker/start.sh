@@ -23,13 +23,15 @@ if [ -z "${YOUTUBE_API_KEY:-}" ] || [ -z "${YOUTUBE_CHANNEL_ID:-}" ]; then
 fi
 
 echo "========================================"
-echo "Starting 24/7 YouTube Stream (Documentary Overlay)"
+echo "Starting 24/7 YouTube Stream (Mars & Beehive Cluster Sky Tracker)"
 echo "Output Resolution : 1280x720 (720p — sized for a 2-core CI runner)"
 echo "FPS               : 30"
 echo "========================================"
 
 FONT="font.ttf"
-GOLD="0x4FC3F7"
+# Accent color — Mars orange (was sky blue 0x4FC3F7). If you change this,
+# also change GOLD_R/G/B below so the label marker dot matches.
+GOLD="0xFF8A50"
 RED="0xE8453C"
 ASSET_DIR="panel_assets"
 INFO_FILE="galaxy_info.txt"
@@ -48,8 +50,8 @@ HEADLINE_LINE_H=$((HEADLINE_FONTSIZE + HEADLINE_LINE_SPACING))
 VIEWER_MIN_TO_SHOW=10
 
 # Approximate center + radius (in 1280x720 output coordinates) of the
-# subscribe icon baked into overlay.png, used to draw a pulsing gold
-# ring around it every few seconds so it catches the eye. Adjust these
+# subscribe icon baked into overlay.png, used to draw a pulsing ring
+# around it every few seconds so it catches the eye. Adjust these
 # three numbers to match the icon's actual position in your overlay.png
 # — the defaults below are an estimate for the bottom-right corner.
 SUB_ICON_X=1249
@@ -62,26 +64,26 @@ SUB_ICON_R=20
 ENABLE_BUMPER=true
 BUMPER_DURATION=5   # seconds
 BUMPER_MESSAGES=(
-    "Watch the Perseid Meteor Shower and search the night sky for shooting stars.",
-    "Look toward the night sky and discover bright Perseid meteors streaking across the darkness.",
-    "The Perseids are one of the most spectacular meteor showers of the year.",
-    "Keep watching the sky for fast-moving Perseid meteors and brilliant shooting stars.",
-    "Journey beneath the stars and experience the beauty of the Perseid Meteor Shower.",
-    "Perseid meteors are created as Earth passes through debris left by Comet Swift-Tuttle.",
-    "Watch for bright flashes as tiny particles enter Earth's atmosphere at incredible speeds.",
-    "The Perseid Meteor Shower brings shooting stars to skies around the world.",
-    "Stay with us and keep watching for the next bright Perseid meteor.",
-    "Turn your eyes toward the darkest part of the sky for the best meteor-watching experience.",
-    "The Perseids are famous for producing fast and bright meteors across the summer sky.",
-    "Every meteor is a tiny piece of cosmic debris meeting Earth's atmosphere.",
-    "Look up and explore one of nature's most beautiful nighttime spectacles.",
-    "The night sky is constantly changing. Stay tuned for the next Perseid shooting star.",
-    "Watch the Perseids live and discover the wonders hidden in Earth's night sky.",
-    "Bright meteors can appear suddenly, so keep watching and enjoy the entire sky.",
-    "The Perseid Meteor Shower connects Earth with debris traveling through our solar system.",
-    "Experience the night sky, shooting stars, and the spectacular Perseid meteor stream.",
-    "Keep watching the stars. The next Perseid meteor could appear at any moment.",
-    "Enjoy the Perseid Meteor Shower LIVE and explore the wonders of our night sky."
+    "Mars passes through the Beehive Star Cluster around October 11 and 12, 2026.",
+    "Watch the Red Planet glide through the glittering stars of Messier 44.",
+    "Mars shines orange-red among the pale blue-white stars of the Beehive Cluster.",
+    "Mars looks close to the Beehive, but the cluster is about 600 light-years farther away.",
+    "A pair of binoculars turns this meeting into a spectacular sight.",
+    "The Beehive Cluster holds roughly 1,000 stars, and Mars is about to join the swarm.",
+    "Look toward the constellation Cancer, the Crab, to find Mars and the Beehive.",
+    "Planets follow the ecliptic, which is why they sometimes cross star clusters like the Beehive.",
+    "Mars drifts eastward against the stars, slowly crossing the Beehive night after night.",
+    "Mars rises after midnight and shines best in the dark sky before dawn.",
+    "The Beehive is also called Praesepe, Latin for the manger.",
+    "Mars glows with the color of iron oxide dust spread across its surface.",
+    "Stay with us and watch the Red Planet visit one of the sky's most famous star clusters.",
+    "Dark skies reveal the Beehive as a faint misty patch to the naked eye.",
+    "Galileo first resolved the Beehive into individual stars with his telescope in 1609.",
+    "Every night the sky changes. Tonight Mars is closer to the heart of the Beehive.",
+    "Mars is far brighter than any single star in the Beehive Cluster.",
+    "A rare celestial meeting: one planet, one ancient star cluster, one beautiful sky.",
+    "Keep watching as Mars crosses the Beehive in our October 2026 Sky Tracker.",
+    "Enjoy Mars meeting the Beehive Star Cluster LIVE and explore the wonders of our night sky."
 )
 
 #############################################
@@ -94,16 +96,17 @@ mkdir -p "$ASSET_DIR"
 
 #############################################
 # Generate the coordinate-label marker dot once
-# at startup: a small transparent PNG with a
-# gold-filled center and white ring, matching
-# the panel's gold accent color. Used by
+# at startup: a small transparent PNG with an
+# accent-filled center and white ring, matching
+# the panel's accent color. Used by
 # build_labels_chain() as ffmpeg input index 2.
 # Always generated (cheap, one frame, 20x20) —
 # harmless/unused by ffmpeg on videos that don't
 # have a matching .labels.txt file.
 #############################################
 DOT_MARKER="dot_marker.png"
-GOLD_R=79; GOLD_G=195; GOLD_B=247
+# Must match GOLD above (0xFF8A50 = 255,138,80)
+GOLD_R=255; GOLD_G=138; GOLD_B=80
 DOT_VF="format=rgba,geq=r=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_R}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):g=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_G}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):b=(if(lte(hypot(X-10\,Y-10)\,5)\,${GOLD_B}\,if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))):a=(if(lte(hypot(X-10\,Y-10)\,8)\,255\,0))"
 ffmpeg -y -f lavfi -i "color=c=black@0.0:s=20x20" -vf "$DOT_VF" -frames:v 1 "$DOT_MARKER" -loglevel error
 if [ ! -s "$DOT_MARKER" ]; then
@@ -215,67 +218,72 @@ trap 'kill "$CLOCK_PID" 2>/dev/null || true; [ -n "$SUBS_PID" ] && kill "$SUBS_P
 #############################################
 # Static panel text (unchanged across videos)
 #############################################
-printf 'PERSEID METEORS'                         > "$ASSET_DIR/title1.txt"
-printf 'S H O O T I N G   S T A R S   T O N I G H T' > "$ASSET_DIR/title2.txt"
-printf 'L I V E   M E T E O R   W A T C H'       > "$ASSET_DIR/header.txt"
-printf 'NIGHT SKY OBSERVATORY'                   > "$ASSET_DIR/eyebrow.txt"
-printf 'SUBSCRIBE FOR MORE SPACE & SCIENCE'      > "$ASSET_DIR/cta.txt"
-printf 'METEOR FACT'                             > "$ASSET_DIR/fact_label.txt"
+printf 'MARS + BEEHIVE CLUSTER'                      > "$ASSET_DIR/title1.txt"
+printf 'R E D   P L A N E T   M E E T S   M 4 4'     > "$ASSET_DIR/title2.txt"
+printf 'L I V E   S K Y   T R A C K E R'             > "$ASSET_DIR/header.txt"
+printf 'OCTOBER 2026 SKY EVENT'                      > "$ASSET_DIR/eyebrow.txt"
+printf 'SUBSCRIBE FOR MORE SPACE & SCIENCE'          > "$ASSET_DIR/cta.txt"
+printf 'SKY FACT'                                    > "$ASSET_DIR/fact_label.txt"
 
 #############################################
 # Default headline / fact pools (used as a
 # last resort if galaxy_info.txt / facts.txt
 # are missing or empty)
+#
+# NOTE: keep DEFAULT_HEADLINES at 15 entries
+# or fewer — the progress dots under the
+# headline are 17px apart and the panel is
+# only ~280px wide.
 #############################################
 DEFAULT_HEADLINES=(
-    "The Perseid Meteor Shower is one of the most spectacular annual meteor showers.",
-    "Perseid meteors are created when Earth passes through debris left behind by Comet Swift-Tuttle.",
-    "Tiny particles from Comet Swift-Tuttle create brilliant streaks of light as they enter Earth's atmosphere.",
-    "Perseid meteors can travel through Earth's atmosphere at incredible speeds.",
-    "The Perseids are known for producing bright and fast-moving shooting stars.",
-    "Meteor showers occur when Earth travels through streams of dust and debris in space.",
-    "Every shooting star is a small piece of cosmic material burning high in Earth's atmosphere.",
-    "The Perseid Meteor Shower appears to radiate from the constellation Perseus.",
-    "Dark skies provide the best conditions for spotting faint Perseid meteors.",
-    "Bright Perseid fireballs can sometimes outshine many of the stars in the night sky.",
-    "The Perseid meteor stream is associated with Comet 109P/Swift-Tuttle.",
-    "Earth encounters the Perseid debris stream every year as it travels around the Sun.",
-    "A meteor becomes visible when a small piece of space debris interacts with Earth's atmosphere.",
-    "The Perseids can produce numerous meteors during periods of favorable viewing conditions.",
-    "Look toward the darkest part of the sky and allow your eyes time to adjust to the darkness."
+    "Mars passes through the Beehive Cluster around October 11-12, 2026."
+    "The Beehive Cluster, Messier 44, lies in the constellation Cancer, the Crab."
+    "Mars will shine as a bright orange-red dot among the cluster's pale stars."
+    "Mars is only minutes of light-time away. The Beehive is about 600 light-years away."
+    "Planets travel along the ecliptic, so they often pass near the Beehive Cluster."
+    "Binoculars reveal dozens of Beehive stars with Mars glowing among them."
+    "Mars rises after midnight and shines best in the dark sky before dawn."
+    "Night after night, Mars drifts eastward against the background stars."
+    "The Beehive is also known as Praesepe, Latin for the manger."
+    "The cluster holds around 1,000 stars bound loosely by gravity."
+    "Mars owes its red color to iron oxide dust on its surface."
+    "Dark skies away from city lights give the best view of the Beehive."
+    "The Beehive Cluster is roughly 600 million years old."
+    "Galileo first resolved the Beehive into individual stars in 1609."
+    "Watch the sky change as Mars slowly moves across the cluster."
 )
 
 DEFAULT_FACTS=(
-    "The Perseid Meteor Shower is associated with Comet 109P/Swift-Tuttle.",
-    "Earth passes through the debris stream left behind by Comet Swift-Tuttle every year.",
-    "Perseid meteors are tiny pieces of cometary debris that enter Earth's atmosphere.",
-    "A meteor becomes visible when a space particle heats and excites gases in Earth's atmosphere.",
-    "The Perseids appear to radiate from a point in the constellation Perseus called the radiant.",
-    "The Perseid radiant rises higher in the sky during the night, improving viewing conditions.",
-    "Perseid meteors can enter Earth's atmosphere at speeds of roughly 59 kilometers per second.",
-    "Some Perseid meteors are bright enough to be seen even when they are not directly overhead.",
-    "Very bright meteors are sometimes called fireballs.",
-    "Meteor showers occur when Earth crosses a stream of dust and debris left along a comet's orbit.",
-    "Most meteoroids that create visible shooting stars are relatively small particles.",
-    "The bright streak of a meteor is produced high in Earth's atmosphere, not in outer space.",
-    "The Perseids are known for producing many fast and bright meteors.",
-    "Dark locations away from city lights provide much better conditions for meteor watching.",
-    "Your eyes may need around 20 to 30 minutes to become fully adapted to dark conditions.",
-    "A bright Moon can make faint meteors harder to see by increasing the brightness of the night sky.",
-    "You do not need a telescope to watch a meteor shower.",
-    "Meteor showers are best viewed with a wide, unobstructed view of the sky.",
-    "The Perseids are active for several weeks, although activity varies from night to night.",
-    "The Perseid meteor stream follows the long orbital path of Comet Swift-Tuttle.",
-    "Comet Swift-Tuttle takes about 133 years to orbit the Sun.",
-    "The last perihelion passage of Comet Swift-Tuttle occurred in 1992.",
-    "Meteoroids are pieces of rock or metal traveling through space before entering an atmosphere.",
-    "Once a meteoroid enters Earth's atmosphere and produces a visible streak, it is called a meteor.",
-    "If part of a space rock survives the journey through the atmosphere and reaches the ground, it is called a meteorite.",
-    "Earth's atmosphere protects the surface from most small meteoroids by causing them to burn or break apart.",
-    "The Perseid radiant is located near the constellation Perseus, but meteors can appear anywhere across the sky.",
-    "Meteor trails can last only a fraction of a second, while some persistent trails can remain visible longer.",
-    "The number of meteors you actually see depends on sky darkness, weather, Moon brightness, and your viewing location.",
-    "Every shooting star is a brief visible reminder that Earth is traveling through the debris of our Solar System."
+    "Mars and the Beehive only look close from our viewpoint. It is a line-of-sight alignment."
+    "Messier 44 is one of the nearest open star clusters to Earth."
+    "The Beehive is about 600 light-years away, while Mars is only light-minutes from us."
+    "Mars is far brighter than any single star in the Beehive Cluster."
+    "The cluster glows at about magnitude 3.1 and can be seen with the naked eye under dark skies."
+    "The Beehive spans about three Full Moons across the sky."
+    "Binoculars or a wide-field low-power telescope give the best view of M44."
+    "Mars looks orange-red because of iron oxide, or rust, in its dust."
+    "Mars has a diameter of about 6,779 km, roughly half that of Earth."
+    "A day on Mars lasts about 24 hours and 37 minutes."
+    "A Martian year lasts about 687 Earth days."
+    "Olympus Mons on Mars is about 22 km high, the tallest known volcano in the Solar System."
+    "Valles Marineris is a canyon system more than 4,000 km long on Mars."
+    "Mars has two small moons named Phobos and Deimos."
+    "The Sun, Moon and planets all follow the ecliptic, a path through the zodiac constellations."
+    "Cancer is a faint constellation, and the Beehive is its most famous sight."
+    "Two faint stars called the Aselli, or donkey colts, sit on either side of the Beehive."
+    "Ancient skywatchers called the cluster Praesepe, the manger, with the donkey colts beside it."
+    "Ptolemy described the cluster as a misty patch in the chest of Cancer."
+    "Galileo counted about 40 stars in the cluster with his telescope in 1609."
+    "The Beehive contains roughly 1,000 stars that formed together from the same cloud."
+    "The cluster is thought to be about 600 million years old."
+    "Its stars share a common motion through space, like a flock traveling together."
+    "Mars moves eastward against the stars, a little more each night."
+    "Let your eyes adapt to the dark for 20 to 30 minutes before observing."
+    "You do not need a telescope. A basic pair of binoculars is enough."
+    "Moonlight washes out faint stars, so moonless nights show the cluster best."
+    "Planets shine with a steadier light than stars, which twinkle more."
+    "Under good conditions the Beehive looks like a small misty cloud to the naked eye."
+    "Mars crossing the Beehive is a favorite target for astrophotographers."
 )
 
 #############################################
@@ -295,17 +303,20 @@ DEFAULT_FACTS=(
 # edge-avoidance (flips below/left near frame
 # edges) are computed automatically.
 #
+# Example for this event (<video>.labels.txt):
+#   640,360,Mars
+#   760,300,Beehive Cluster (M44)
+#
 # Visual style matches the rest of the panel:
-# gold-ring/white marker dot (uses the
-# pre-rendered dot_marker.png), gold-tinted
-# connector line, and a label box with a gold
-# accent bar + thin gold outline (same language
+# accent-ring/white marker dot (uses the
+# pre-rendered dot_marker.png), accent-tinted
+# connector line, and a label box with an
+# accent bar + thin outline (same language
 # as the CTA box).
 #
 # Notes/limits:
 #  - Keep label text under ~28 characters — the
-#    box is a fixed width and does not
-#    reflow/resize to fit longer text.
+#    box is auto-sized but capped at BOX_W_MAX.
 #  - Best used for points with x > ~370 so
 #    labels don't collide with the left info
 #    panel.
@@ -396,8 +407,7 @@ build_labels_chain() {
         printf '%s' "$text" > "$ASSET_DIR/label${idx}.txt"
 
         # Auto-size the box to the label's text instead of using one
-        # fixed width for every label — "Pulsar Wind" no longer gets the
-        # same wide box as a much longer phrase.
+        # fixed width for every label.
         local box_w=$(( ${#text} * AVG_CHAR_W + ACCENT_W + LABEL_PAD_L + LABEL_PAD_R ))
         [ "$box_w" -lt "$BOX_W_MIN" ] && box_w=$BOX_W_MIN
         [ "$box_w" -gt "$BOX_W_MAX" ] && box_w=$BOX_W_MAX
@@ -415,8 +425,7 @@ build_labels_chain() {
         # Collision avoidance: if this box overlaps (within BOX_GAP of)
         # any box already placed for an earlier label on this video,
         # push it downward in BOX_H+BOX_GAP steps until it's clear, so
-        # two nearby coordinate labels never end up crowding each other
-        # like "Glowing gas knot" / "Dust cloud region" did before.
+        # two nearby coordinate labels never end up crowding each other.
         tries=0
         while :; do
             collision=false
@@ -464,15 +473,15 @@ build_labels_chain() {
 
         local n1="lbl${idx}_dot" n2="lbl${idx}_v" n3="lbl${idx}_h" n4="lbl${idx}_bg" n5="lbl${idx}_bar" n6="lbl${idx}_outline" n7="lbl${idx}_txt"
 
-        # Gold-tinted connector line (right-angle: vertical then horizontal)
+        # Accent-tinted connector line (right-angle: vertical then horizontal)
         LABELS_CHAIN+="[${prev}]drawbox=x=${x}:y=${seg_y_top}:w=2:h=${seg_h}:color=${GOLD}@0.85:t=fill[${n2}];"
         LABELS_CHAIN+="[${n2}]drawbox=x=${h_left}:y=${box_y}:w=${h_w}:h=2:color=${GOLD}@0.85:t=fill[${n3}];"
-        # Label box: dark fill + gold accent bar (left edge) + thin gold outline
+        # Label box: dark fill + accent bar (left edge) + thin outline
         LABELS_CHAIN+="[${n3}]drawbox=x=${box_x}:y=${box_y}:w=${box_w}:h=${BOX_H}:color=black@0.78:t=fill[${n4}];"
         LABELS_CHAIN+="[${n4}]drawbox=x=${box_x}:y=${box_y}:w=${ACCENT_W}:h=${BOX_H}:color=${GOLD}:t=fill[${n5}];"
         LABELS_CHAIN+="[${n5}]drawbox=x=${box_x}:y=${box_y}:w=${box_w}:h=${BOX_H}:color=${GOLD}@0.5:t=1[${n6}];"
         LABELS_CHAIN+="[${n6}]drawtext=fontfile=${FONT}:textfile=${ASSET_DIR}/label${idx}.txt:fontcolor=white:fontsize=${LABEL_FONTSIZE}:x=$((box_x + ACCENT_W + LABEL_PAD_L)):y=$((box_y + (BOX_H - LABEL_FONTSIZE) / 2)):${SHADOW}[${n7}];"
-        # Circular gold-ring/white marker dot, overlaid on top of everything
+        # Circular accent-ring/white marker dot, overlaid on top of everything
         LABELS_CHAIN+="[${n7}][dm${idx}]overlay=x=$((x - 8)):y=$((y - 8))[${n1}];"
 
         prev="$n1"
@@ -502,6 +511,11 @@ build_labels_chain() {
 # each video so the panel doesn't feel like a
 # static banner repeating identically on every
 # clip.
+#
+# NOTE: if galaxy_info.txt / facts.txt exist in
+# your repo they OVERRIDE the built-in Mars &
+# Beehive defaults above — delete or replace
+# them, or the old content will still show.
 #############################################
 prepare_video_content() {
     local url="$1"
